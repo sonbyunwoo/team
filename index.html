@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="./css/contact.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link href="./css/style1.css" rel="stylesheet" />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="./css/swiper-bundle.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <title>index</title>
+  </head>
+  <body>
+    <!-- 네비바 시작 -->
+    <nav class="navbar navbar-expand-md fixed-top">
+      <div class="container-fluid">
+        <a class="logo-font navbar-brand pt-3" href="./index.html">
+          <img src="./images/logo4.png" alt="로고" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menubar"
+          aria-controls="menubar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menubar">
+          <ul class="navbar-nav mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Register</a>
+            </li>
+          </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="menubar">
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">지도</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">뉴스</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">프로필</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">회사정보</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- 네비바 끝 -->
+    <!-- 스와이퍼 -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <!-- 홈 섹션 시작 -->
+          <section>
+            <div
+              class="d-flex flex-column justify-content-center align-items-center"
+            >
+              <h1 class="searchhead">MEDI NOTE</h1>
+              <form action="https://www.google.com/search" method="GET">
+                <div class="mx-auto mt-3 search-bar input-group">
+                  <span class="input2 input-group-text rounded-start-pill"
+                    ><i class="bi bi-search"></i
+                  ></span>
+                  <input
+                    name="q"
+                    type="text"
+                    class="mainsearch form-control rounded-right-5"
+                    placeholder="찾으시는 약의 이름을 적어주세요."
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                  />
+                  <span
+                    class="input2 input-group-text rounded-end-pill border border-0"
+                  ></span>
+                  <div class="input-group-append"></div>
+                </div>
+              </form>
+            </div>
+          </section>
+          <!-- 홈 섹션 끝 -->
+        </div>
+        <div class="swiper-slide">
+          <!-- 지도 시작 -->
+          <section>
+            <div
+              class="container pt-5 d-flex flex-column justify-content-start align-items-center text-center"
+              style="height: 100vh; width: auto"
+            >
+              <h1 class="mt-5" id="maptitle">병원·약국 찾아보기</h1>
+              <div class="row w-50 mt-4">
+                <div class="col-12">
+                  <!-- 약국 버튼 -->
+                  <button
+                    class="btn btn-outline-light btn-lg m-1"
+                    type="button"
+                    onclick="setKeyword('약국')"
+                  >
+                    약국
+                  </button>
+                  <!-- 병원 버튼 -->
+                  <button
+                    class="btn btn-outline-success btn-lg m-1"
+                    type="button"
+                    onclick="setKeyword('병원')"
+                  >
+                    병원
+                  </button>
+                </div>
+              </div>
+              <div class="row w-50">
+                <div class="col-12 my-5">
+                  <form
+                    class="input-group mb-3"
+                    onsubmit="searchPlacesFromInput(); return false;"
+                  >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="ex&#41;OO시OO동, OO역"
+                      aria-label="검색어 입력"
+                      id="mainKeyword"
+                    />
+                    <button class="btn btn-primary" type="submit">검색</button>
+                  </form>
+                </div>
+              </div>
+              <div class="map_wrap w-100" style="flex-grow: 1">
+                <div
+                  id="map"
+                  style="
+                    width: 100%;
+                    height: 70%;
+                    position: relative;
+                    overflow: hidden;
+                  "
+                ></div>
+
+                <div id="menu_wrap" class="bg_white">
+                  <div class="option" id="searchForm">
+                    <div>
+                      <form
+                        onsubmit="searchPlacesFromInput(this); return false;"
+                      >
+                        <input type="text" value="" id="keyword" size="15" />
+                        <button type="submit">검색하기</button>
+                      </form>
+                    </div>
+                  </div>
+
+                  <ul id="placesList"></ul>
+                  <div id="pagination"></div>
+                </div>
+              </div>
+            </div>
+            <script
+              type="text/javascript"
+              src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f7a2b9bdb3acd67783acc76f7011838a&libraries=services"
+            ></script>
+            <script>
+              function searchPlacesFromInput(form) {
+                var keyword = form.querySelector('input[type="text"]').value;
+                document.getElementById("keyword").value = keyword;
+                searchPlaces();
+              }
+
+              function searchPlaces() {
+                var keyword = document.getElementById("keyword").value;
+
+                // 지도 API 검색 로직 여기에 추가
+                console.log("검색 키워드:", keyword);
+
+                // 예제: 콘솔에 키워드 출력
+                // 실제로 검색 기능을 추가하려면 아래에 지도 API 관련 코드를 넣으세요.
+              }
+            </script>
+          </section>
+          <!-- 지도 끝 -->
+        </div>
+        <div class="swiper-slide">
+          <!-- 뉴스 스크랩 시작 -->
+          <section class="container overflow-hidden" id="news">
+            <div class="text-center py-3">
+              <h1 class="fw-bold">신약 정보</h1>
+            </div>
+            <div class="row">
+              <!-- 합친 div -->
+              <div class="col-md-12 mb-4">
+                <div class="card-hover1 shadow rounded p-4 bg-light">
+                  <div>
+                    <div class="img1"></div>
+                    <div class="text-center">
+                      <h3 class="fw-bold mt-2">신약 뉴스</h3>
+                    </div>
+                  </div>
+                  <hr />
+                  <p class="content2">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Ratione voluptatum culpa dolorem repellat exercitationem
+                    porro delectus rerum quas debitis aut, beatae eum facilis
+                    impedit corporis ea. Beatae nostrum harum voluptates
+                    pariatur ipsum porro repellat ex iure doloribus vel dolorore
+                    voluptatem sequi quasi ad unde dnobis, magnam error aliquam?
+                    Minima!
+                  </p>
+                  <a href="#">자세히보기</a>
+                </div>
+              </div>
+              <!-- 나머지 4개의 div -->
+
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card-hover1 shadow rounded p-4 bg-light">
+                  <div>
+                    <div class="img2"></div>
+                    <div class="text-center">
+                      <h3 class="fw-bold m-3">신약 정보1</h3>
+                      <hr />
+                    </div>
+                  </div>
+                  <p class="content1">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Debitis blanditiis sapiente dolor ratione molestias veniam
+                    incidunt inventore autem dolorum facilis nulla odio, harum
+                    voluptates asperiores.
+                  </p>
+                  <a href="#">자세히보기</a>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card-hover1 shadow rounded p-4 bg-light">
+                  <div>
+                    <div class="img3"></div>
+                    <div class="text-center">
+                      <h3 class="fw-bold m-3">신약 정보2</h3>
+                      <hr />
+                    </div>
+                  </div>
+                  <p class="content1">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Debitis blanditiis sapiente dolor ratione molestias veniam
+                    incidunt inventore autem dolorum facilis nulla odio, harum
+                    voluptates asperiores.
+                  </p>
+                  <a href="#">자세히보기</a>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card-hover1 shadow rounded p-4 bg-light hiding">
+                  <div>
+                    <div class="img4"></div>
+                    <div class="text-center">
+                      <h3 class="fw-bold m-3">신약 정보3</h3>
+                      <hr />
+                    </div>
+                  </div>
+                  <p class="content1">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Debitis blanditiis sapiente dolor ratione molestias veniam
+                    incidunt inventore autem dolorum facilis nulla odio, harum
+                    voluptates asperiores.
+                  </p>
+                  <a href="#">자세히보기</a>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card-hover1 shadow rounded p-4 bg-light hiding">
+                  <div>
+                    <div class="img5"></div>
+                    <div class="text-center">
+                      <h3 class="fw-bold m-3">신약 정보4</h3>
+                      <hr />
+                    </div>
+                  </div>
+                  <p class="content1">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Debitis blanditiis sapiente dolor ratione molestias veniam
+                    incidunt inventore autem dolorum facilis nulla odio, harum
+                    voluptates asperiores.
+                  </p>
+                  <a href="#">자세히보기</a>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- 뉴스 스크랩 끝 -->
+        </div>
+        <div class="swiper-slide">
+          <!-- 프로필 시작 -->
+          <section>
+            <!-- <div class="fullsection full4 vh-100">
+              <div class="col-lg">
+                <div class="row">
+                  <div
+                    class="d-flex flex-column justify-content-center align-items-center vh-100"
+                  >
+                    <div class="swiper mySwiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide col-md-6 col-sm-3">
+                          <img
+                            src="./images/profile-1.png"
+                            alt="profile-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#profile1"
+                          />
+                        </div>
+                        <div class="swiper-slide col-md-6 col-sm-3">
+                          <img
+                            src="./images/profile-2.jpg"
+                            alt="profile-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#profile2"
+                          />
+                        </div>
+                        <div class="swiper-slide col-md-6 col-sm-3">
+                          <img
+                            src="./images/profile-3.jpg"
+                            alt="profile-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#profile3"
+                          />
+                        </div>
+                        <div class="swiper-slide col-md-6 col-sm-3">
+                          <img
+                            src="./images/profile-4.jpg"
+                            alt="profile-4"
+                            data-bs-toggle="modal"
+                            data-bs-target="#profile4"
+                          />
+                        </div>
+                        <div class="swiper-slide col-md-6">
+                          <img
+                            src="./images/profile-5.jpg"
+                            alt="profile-5"
+                            data-bs-toggle="modal"
+                            data-bs-target="#profile5"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <!-- 모달 1 -->
+            <div
+              class="modal fade"
+              id="profile1"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="profile1Label"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="profile1Label">
+                      소개 및 역할
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">...</div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      닫기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 모달 2 -->
+            <div
+              class="modal fade"
+              id="profile2"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="profile2Label"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="profile2Label">
+                      소개 및 역할
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">...</div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      닫기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 모달 3 -->
+            <div
+              class="modal fade"
+              id="profile3"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="profile3Label"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="profile3Label">
+                      소개 및 역할
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">...</div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      닫기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 모달 4 -->
+            <div
+              class="modal fade"
+              id="profile4"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="profile4Label"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="profile4Label">
+                      소개 및 역할
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">...</div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      닫기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 모달 5 -->
+            <div
+              class="modal fade"
+              id="profile5"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="profile5Label"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="profile5Label">
+                      소개 및 역할
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">...</div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      닫기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- 프로필 끝 -->
+        </div>
+        <div class="swiper-slide">
+          <!-- 연락처 시작 -->
+          <section>
+            <div
+              class="fullsection full5 d-flex justify-content-center align-items-center"
+            >
+              <main class="ContactMain">
+                <ul class="ContactUl">
+                  <li class="ContactLi">
+                    <article class="ContactArticle">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
+
+                      <h3 class="ContactH3">연락처</h3>
+                      <p class="ContactP">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Minima alias fuga et ab magnam aliquam commodi ratione
+                        vel fugit nesciunt voluptatibus.
+                      </p>
+                    </article>
+                  </li>
+                  <li class="ContactLi">
+                    <article class="ContactArticle">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5"
+                        />
+                      </svg>
+
+                      <h3 class="ContactH3">회사소개</h3>
+                      <p class="ContactP">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Minima alias fuga et ab magnam aliquam commodi ratione
+                        vel fugit nesciunt voluptatibus.
+                      </p>
+                    </article>
+                  </li>
+                  <li class="ContactLi">
+                    <article class="ContactArticle">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
+                        />
+                      </svg>
+
+                      <h3 class="ContactH3">주소</h3>
+                      <p class="ContactP">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Minima alias fuga et ab magnam aliquam commodi ratione
+                        vel fugit nesciunt voluptatibus.
+                      </p>
+                    </article>
+                  </li>
+                  <li class="ContactLi">
+                    <article class="ContactArticle">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"
+                        />
+                      </svg>
+
+                      <h3 class="ContactH3">문의사항</h3>
+                      <p class="ContactP">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Minima alias fuga et ab magnam aliquam commodi ratione
+                        vel fugit nesciunt voluptatibus.
+                      </p>
+                    </article>
+                  </li>
+                </ul>
+              </main>
+            </div>
+          </section>
+          <!--연락처끝-->
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="./js/script1.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

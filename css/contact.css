@@ -1,0 +1,199 @@
+@font-face {
+  font-family: "Geist";
+  src: url("https://assets.codepen.io/605876/GeistVF.ttf") format("truetype");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: hsl(0 0% 2%);
+}
+
+.full5 {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: url(../images/bg5.jpg);
+}
+/* .full5 {
+  background-image: url(../images/pill-4897529_1920.jpg);
+} */
+
+main {
+  width: 60ch;
+  max-width: 100%;
+}
+
+.full5 {
+  font-family: "Geist", arial;
+  font-weight: 100;
+}
+
+.ContactUl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ContactLi {
+  padding: 1rem;
+  list-style-type: none;
+}
+/* dd */
+.ContactUl::after {
+  border-radius: 1rem;
+  content: "";
+  position: absolute;
+  background: hsl(0, 0%, 10%);
+  pointer-events: none;
+  z-index: -2;
+  inset: calc(var(--top) * 1px) calc(100% - (var(--right) * 1px))
+    calc(100% - (var(--bottom) * 1px)) calc(var(--left) * 1px);
+  transition: inset 0.2s;
+}
+
+.ContactUl[data-enhanced]:hover {
+  --active: 1;
+}
+.ContactUl[data-enhanced]::after {
+  opacity: var(--active, 0);
+  transition: opacity 0.2s, inset 0.2s 0.2s;
+}
+.ContactUl[data-enhanced]:hover::after {
+  transition: opacity 0.2s 0.2s, inset 0.2s;
+}
+
+@supports (anchor-name: --anchor) {
+  .ContactLi:nth-of-type(1) .ContactArticle {
+    anchor-name: --develop;
+  }
+  .ContactLi:nth-of-type(2) .ContactArticle {
+    anchor-name: --preview;
+  }
+  .ContactLi:nth-of-type(3) .ContactArticle {
+    anchor-name: --ship;
+  }
+  .ContactLi:nth-of-type(4) .ContactArticle {
+    anchor-name: --profit;
+  }
+
+  :root {
+    --anchor: --develop;
+  }
+  :root:has(.ContactLi:nth-of-type(1):hover) {
+    --anchor: --develop;
+  }
+  :root:has(.ContactLi:nth-of-type(2):hover) {
+    --anchor: --preview;
+  }
+  :root:has(.ContactLi:nth-of-type(3):hover) {
+    --anchor: --ship;
+  }
+  :root:has(.ContactLi:nth-of-type(4):hover) {
+    --anchor: --profit;
+  }
+
+  .ContactUl::after {
+    position-anchor: var(--anchor);
+    inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
+  }
+
+  .ContactUl:has(.ContactLi:hover) {
+    --active: 1;
+  }
+  .ContactUl::after {
+    opacity: var(--active, 0);
+    transition: opacity 0.2s, inset 0.2s 0.2s;
+  }
+  .ContactUl:hover::after {
+    transition: opacity 0.2s 0.2s, inset 0.2s;
+  }
+
+  .ContactArticle::after {
+    content: unset;
+    display: none;
+  }
+}
+/* dd */
+.ContactUl:not([data-enhanced]) .ContactArticle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: hsl(0, 0%, 10%);
+  border-radius: 1rem;
+  opacity: var(--li-active, 0);
+  transition: opacity 0.2s;
+}
+
+.ContactArticle {
+  color: hsl(0, 0%, 10%);
+  border: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.ContactArticle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--bg) 0 2px, transparent 2px 38px) -20px -20px /
+      40px 40px,
+    linear-gradient(90deg, var(--bg) 0 2px, transparent 2px 38px) -20px -20px /
+      40px 40px;
+  mask: linear-gradient(-35deg, var(--bg) 0%, transparent 45%);
+  z-index: -1;
+  opacity: var(--li-active, 0);
+  transition: opacity 0.2s;
+}
+
+.ContactLi:hover {
+  --li-active: 1;
+}
+.ContactLi:hover svg path {
+  stroke-opacity: 400; /* 마우스를 올렸을 때 불투명도 설정 */
+}
+
+.ContactArticle .ContactH3 {
+  margin: 0;
+  font-weight: 1000;
+  color: rgb(0, 0, 0);
+}
+
+.ContactArticle .ContactP {
+  margin: 0;
+  text-wrap: pretty;
+  background: linear-gradient(hsl(0, 0%, 0%), rgb(40, 40, 40));
+  color: transparent;
+  background-clip: text;
+  font-weight: 300;
+}
+
+.ContactArticle svg {
+  width: 80px;
+}
+/* 마우스를 올렸을 때 불투명도 설정 */
+.ContactArticle svg path {
+  stroke-width: 0.75;
+  stroke: hsl(var(--hue, 30) calc(var(--li-active, 0) * 60%) 60%);
+  transition: stroke 0.5s;
+  stroke-opacity: 400;
+}
+
+.ContactLi:nth-of-type(1) {
+  --hue: 30;
+}
+.ContactLi:nth-of-type(2) {
+  --hue: 280;
+}
+.ContactLi:nth-of-type(3) {
+  --hue: 210;
+}
+.ContactLi:nth-of-type(4) {
+  --hue: 120;
+}
